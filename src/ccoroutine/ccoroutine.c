@@ -1,5 +1,4 @@
 #include "ccoroutine.h"
-#include "promise.h"
 #include <stdlib.h>
 #include <signal.h>
 
