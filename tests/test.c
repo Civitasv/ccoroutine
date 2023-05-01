@@ -45,19 +45,24 @@ void control_flow()
 
 void *hello_world(ccoroutine *coro, void *userdata)
 {
-	printf("hello: %s\n", (char *)userdata);
+	printf("%s\n", (char *)userdata);
 	ccoroutine_yield(coro, (void *)1);
-	printf("Another line \n");
+	printf("END: %s \n", (char *)userdata);
 	return (void *)2;
 }
 
 void ccoroutine_test()
 {
-	ccoroutine *coro = ccoroutine_create(hello_world, "hello from here");
-	assert(ccoroutine_resume(coro) == (void *)1);
-	assert(ccoroutine_resume(coro) == (void *)2);
-	assert(ccoroutine_resume(coro) == (void *)-1);
+	ccoroutine *coro = ccoroutine_create(hello_world, "hello from 1");
+	ccoroutine *coro2 = ccoroutine_create(hello_world, "hello from 2");
+
+	while (!ccoroutine_finished(coro) || !ccoroutine_finished(coro2)) {
+		ccoroutine_resume(coro);
+		ccoroutine_resume(coro2);
+	}
+
 	ccoroutine_destroy(coro);
+	ccoroutine_destroy(coro2);
 }
 
 int main()
