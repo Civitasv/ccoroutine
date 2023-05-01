@@ -1,2 +1,5 @@
-add_executable(test test.c)
-target_link_libraries(test ccoroutine)
+add_executable(test_coroutine test_coroutine.c)
+target_link_libraries(test_coroutine ccoroutine)
+
+add_executable(test_async_io test_async_io.c)
+target_link_libraries(test_async_io ccoroutine)
