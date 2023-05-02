@@ -28,7 +28,7 @@ ccoroutine *ccoroutine_create(ccoroutine_function function, void *userdata)
 void *ccoroutine_resume(ccoroutine *coro)
 {
 	if (coro->is_finished)
-		return (void *)-1;
+		return NULL;
 	swapcontext(&coro->suspend_context, &coro->resume_context);
 	return coro->yield_value;
 }
